@@ -1,13 +1,22 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+
+<?php
+if(!isset($this->session->userdata['session_array'])) {
+
+  redirect('/Authentication', 'refresh');
+}
+?>
+
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>User Management</title>
 </head>
 
 <body>
-<a href="<?=site_url()?>/CreateUser">Create User</a><br /><br />
+<a href="<?=site_url()?>/CreateUser">Create User</a><br />
+<button type="button" onclick="location.href='<?=site_url();?>/Logout'">Log Out</button><br />
 <?php
 if(isset($users))
 {?>
@@ -35,6 +44,8 @@ if(isset($users))
 	</table><?php
 }
 
+if(isset($rs))
+	print_r($rs);
 if(isset($message))
 	echo $message;
 ?>
