@@ -18,25 +18,30 @@ class User_Management extends CI_Controller
 		else
 			$data['message'] = 'You have no user yet :(';
 
-        if ( ! file_exists(APPPATH.'views/user_management.php'))
+        if ( ! file_exists(APPPATH.'views/user/user_management.php'))
         {
             // Whoops, we don't have a page for that!
             show_404();
         }
 
-        $this->load->view('user_management', $data);
+        $this->load->view('main', $data);
+        $this->load->view('user/user_management', $data);
     }
+
     public function user_create_form()
     {
-    	$this->load->view('create_user');
+    	$this->load->view('main');
+    	$this->load->view('user/create_user');
     }
+
     public function create_user()
 	{
 		$this->form_validation->set_rules('user_name','Username','required');
 		$this->form_validation->set_rules('password','Password','required');
 		if($this->form_validation->run() == FALSE)
 		{
-			$this->load->view('create_user');
+			$this->load->view('main');
+			$this->load->view('user/create_user');
 		}
 		else
 		{
@@ -62,7 +67,8 @@ class User_Management extends CI_Controller
 			else
 			{
 				$data['message'] = 'Some problem occured!! Could not save the user :(';
-				$this->load->view('user_management', $data);
+				$this->load->view('main');
+				$this->load->view('user/user_management', $data);
 			}
 		}
 	}
@@ -76,7 +82,8 @@ class User_Management extends CI_Controller
 		else
 		{
 			$data['message'] = 'Some problem occured!! Could not delete user :(';
-			$this->load->view('user_management', $data);
+			$this->load->view('main', $data);
+			$this->load->view('user/user_management', $data);
 		}
 	}
 	public function edit_user($user_id)
@@ -88,7 +95,8 @@ class User_Management extends CI_Controller
 			$this->form_validation->set_rules('user_name','Username','required');
 			if($this->form_validation->run() == FALSE)
 			{
-				$this->load->view('edit_user', $data);
+				$this->load->view('main');
+				$this->load->view('user/edit_user', $data);
 			}
 			else
 			{
@@ -106,14 +114,16 @@ class User_Management extends CI_Controller
 				else
 				{
 					$data['message'] = 'Some problem occured!! Could not edit the user :(';
-					$this->load->view('user_management', $data);
+					$this->load->view('main', $data);
+					$this->load->view('user/user_management', $data);
 				}
 			}
 		}
 		else
 		{
 			$data['message'] = 'Some problem occured!! Could not load the user :(';
-			$this->load->view('user_management', $data); 
+			$this->load->view('main', $data);
+			$this->load->view('user/user_management', $data); 
 		}
 	}
 }

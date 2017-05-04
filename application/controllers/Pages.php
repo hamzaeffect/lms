@@ -10,6 +10,7 @@ class Pages extends CI_Controller
                 show_404();
         }
 
+        $this->load->view('main');
         $this->load->view('home');
 	}
 }
