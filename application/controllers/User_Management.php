@@ -8,24 +8,37 @@ class User_Management extends CI_Controller
 		$this->load->model('User_model');
 		$this->load->helper('form');
 		$this->load->library('form_validation');
+		$this->load->library('session');
 	}
     public function index()
     {
-    	$result = $this->User_model->get_users();
-
-		if($result)
-			$data['users'] = $result;
+    	if (!isset($this->session->userdata['session_array']))
+		{
+			redirect('/Authentication', 'refresh');
+		}
 		else
-			$data['message'] = 'You have no user yet :(';
+		{
+			$result = $this->User_model->get_users();
 
-        if ( ! file_exists(APPPATH.'views/user/user_management.php'))
-        {
-            // Whoops, we don't have a page for that!
-            show_404();
-        }
+			if($result)
+			{
+				$data['users'] = $result;
+				$data['rs'] = $this->session->userdata['session_array'];	
+			
+			}
+				//$data['users'] = $result;
+			else
+				$data['message'] = 'You have no user yet :(';
 
-        $this->load->view('main', $data);
-        $this->load->view('user/user_management', $data);
+	        if ( ! file_exists(APPPATH.'views/user_management.php'))
+	        {
+	            // Whoops, we don't have a page for that!
+	            show_404();
+	        }
+
+	        $this->load->view('main', $data);
+            $this->load->view('user/user_management', $data);
+		}
     }
 
     public function user_create_form()
